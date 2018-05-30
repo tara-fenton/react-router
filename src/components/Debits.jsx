@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AccountBalance from './AccountBalance';
 
 class Debits extends Component{
   constructor(props){
@@ -32,6 +33,7 @@ class Debits extends Component{
 
     return(
       <div>
+        <AccountBalance accountBalance={this.props.accountBalance}/>
         <h2>Debits: </h2>
         {debitsComponents}
       </div>

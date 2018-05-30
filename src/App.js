@@ -30,6 +30,8 @@ class App extends Component {
     return Number((creditTotal - debitTotal).toFixed(2));
   }
 
+
+
   componentDidMount(){
     fetch("http://localhost:4000/debits", {
       method: 'GET'
@@ -66,6 +68,8 @@ class App extends Component {
     const LogInComponent = () => (
       <LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn}/>
     );
+    const DebitComponent = () => (<Debits accountBalance={this.state.accountBalance}/>);
+
 
 
     return (
@@ -74,7 +78,7 @@ class App extends Component {
           <Route exact path="/" render={HomeComponent} />
           <Route exact path="/userProfile" render={UserProfileComponent}/>
           <Route exact path="/login" render={LogInComponent}/>
-          <Route exact path="/debits" component={Debits}/>
+          <Route exact path="/debits" render={DebitComponent}/>
         </Switch>
       </Router>
     );
