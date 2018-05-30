@@ -6,15 +6,17 @@ class App extends Component {
   constructor(){
     super();
     this.state={
-      accountBalance= 14568.27,
+      accountBalance: 14568.27,
     }
   }
 
   render() {
+    const HomeComponent = () => (<Home accountBalance={this.state.accountBalance}/>);
+
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={<Home accountBalance={this.state.accountBalance}/>} />
+          <Route exact path="/" render={HomeComponent} />
         </Switch>
       </Router>
     );
