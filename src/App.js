@@ -14,8 +14,39 @@ class App extends Component {
       currentUser: {
         userName: 'tara',
         memberSince: '10/21/2010'
-      }
+      },
+      debits: [],
+      credits: []
     }
+  }
+
+  calculateAccountBalance(credits, debits){
+    let creditTotal = credits.reduce((sum, credit) => {
+      return sum + credit.amount;
+    }, 0);
+    let debitTotal = debits.reduce((sum, debit) => {
+      return sum + debit.amount;
+    }, 0);
+    console.log(creditTotal, debitTotal)
+    return creditTotal - debitTotal;
+  }
+
+  componentDidMount(){
+    fetch("http://localhost:4000/debits", {
+      method: 'GET'
+    }).then((res)=>res.json())
+    .then((debits) => {
+      fetch("http://localhost:4000/credits", {
+        method: 'GET'
+      }).then((res)=>res.json())
+      .then((credits) => {
+        this.calculateAccountBalance(credits, debits);
+        this.setState({
+          debits: debits,
+          credits: credits
+        })
+      }).catch( (err) => console.log(err));
+    }).catch( (err) => console.log(err));
   }
 
   mockLogIn = (logInInfo) => {
