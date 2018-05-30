@@ -5,6 +5,7 @@ import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import LogIn from './components/LogIn';
 import Debits from './components/Debits';
+import Credits from './components/Credits';
 
 class App extends Component {
   constructor(){
@@ -20,6 +21,7 @@ class App extends Component {
     }
 
     this.addDebit = this.addDebit.bind(this);
+    this.addCredit = this.addCredit.bind(this);
   }
 
   //initial functions
@@ -63,6 +65,14 @@ class App extends Component {
     }))
   }
 
+  addCredit(newCredit){
+    let copyArray = [...this.state.credits];
+    copyArray.push(newCredit);
+    this.setState(prevState => ({
+      accountBalance: Number((prevState.accountBalance + Number(newCredit.amount)).toFixed(2)),
+      credits: copyArray
+    }))
+  }
   // end new debits and credits
 
   mockLogIn = (logInInfo) => {
@@ -87,6 +97,11 @@ class App extends Component {
         addDebit={this.addDebit}  
       />
     );
+    const CreditComponent = () => (
+      <Credits accountBalance={this.state.accountBalance} credits={this.state.credits}
+        addCredit={this.addCredit}  
+      />
+    );
 
     return (
       <Router>
@@ -95,6 +110,7 @@ class App extends Component {
           <Route exact path="/userProfile" render={UserProfileComponent}/>
           <Route exact path="/login" render={LogInComponent}/>
           <Route exact path="/debits" render={DebitComponent}/>
+          <Route exact path="/credits" render={CreditComponent}/>
         </Switch>
       </Router>
     );

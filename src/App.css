@@ -31,6 +31,6 @@ a{
   padding: 10px;
 }
 
-.debit-single{
+.debit-single, .credit-single{
   border: 1px solid #DDD;
 }
