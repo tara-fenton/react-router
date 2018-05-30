@@ -27,7 +27,7 @@ class App extends Component {
     let debitTotal = debits.reduce((sum, debit) => {
       return sum + debit.amount;
     }, 0);
-    return (creditTotal - debitTotal).toFixed(2);
+    return Number((creditTotal - debitTotal).toFixed(2));
   }
 
   componentDidMount(){
