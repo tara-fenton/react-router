@@ -27,8 +27,7 @@ class App extends Component {
     let debitTotal = debits.reduce((sum, debit) => {
       return sum + debit.amount;
     }, 0);
-    console.log(creditTotal, debitTotal)
-    return creditTotal - debitTotal;
+    return (creditTotal - debitTotal).toFixed(2);
   }
 
   componentDidMount(){
@@ -40,8 +39,9 @@ class App extends Component {
         method: 'GET'
       }).then((res)=>res.json())
       .then((credits) => {
-        this.calculateAccountBalance(credits, debits);
+        const balance = this.calculateAccountBalance(credits, debits);
         this.setState({
+          accountBalance: balance,
           debits: debits,
           credits: credits
         })
