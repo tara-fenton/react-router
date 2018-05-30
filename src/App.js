@@ -18,8 +18,11 @@ class App extends Component {
       debits: [],
       credits: []
     }
+
+    this.addDebit = this.addDebit.bind(this);
   }
 
+  //initial functions
   calculateAccountBalance(credits, debits){
     let creditTotal = credits.reduce((sum, credit) => {
       return sum + credit.amount;
@@ -29,8 +32,6 @@ class App extends Component {
     }, 0);
     return Number((creditTotal - debitTotal).toFixed(2));
   }
-
-
 
   componentDidMount(){
     fetch("http://localhost:4000/debits", {
@@ -50,6 +51,19 @@ class App extends Component {
       }).catch( (err) => console.log(err));
     }).catch( (err) => console.log(err));
   }
+  // end initial functions
+
+  // handling new debits and credits
+  addDebit(newDebit){
+    let copyArray = [...this.state.debits];
+    copyArray.push(newDebit);
+    this.setState(prevState => ({
+      accountBalance: Number((prevState.accountBalance - newDebit.amount).toFixed(2)),
+      debits: copyArray
+    }))
+  }
+
+  // end new debits and credits
 
   mockLogIn = (logInInfo) => {
     const newUser = {...this.state.currentUser}
@@ -69,10 +83,10 @@ class App extends Component {
       <LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn}/>
     );
     const DebitComponent = () => (
-    <Debits accountBalance={this.state.accountBalance} debits={this.state.debits}/>
-  );
-
-
+      <Debits accountBalance={this.state.accountBalance} debits={this.state.debits}
+        addDebit={this.addDebit}  
+      />
+    );
 
     return (
       <Router>

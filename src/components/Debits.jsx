@@ -23,13 +23,18 @@ class Debits extends Component{
 
   handleSubmit(event){
     event.preventDefault();
-    
+    let date = new Date();
+    this.props.addDebit({
+      description: this.state.description,
+      amount: this.state.amount,
+      date: date.toDateString()
+    })
   }
 
   render(){
-    const debitsComponents = this.props.debits.map((debit) => {
+    const debitsComponents = this.props.debits.map((debit, i) => {
       return (
-        <div className="debit-single">
+        <div key={i} className="debit-single">
           <p>Description: {debit.description}</p>
           <p>Amount: ${debit.amount}</p>
           <p>Date: {debit.date}</p>
